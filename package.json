@@ -4,6 +4,8 @@
   "private": true,
   "homepage": "./",
   "dependencies": {
+    "@types/react": "^19.0.2",
+    "@types/react-dom": "^19.0.2",
     "cra-template": "1.2.0",
     "generate-react-cli": "^8.4.9",
     "react": "^19.0.0",

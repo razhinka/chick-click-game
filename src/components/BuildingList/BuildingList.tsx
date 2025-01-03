@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Building from '../Building/Building';
-import { player } from '../../models/game';
+import { Player } from '../../context/player-context';
 
 const BuildingList = () => (
    <Building player={player}>

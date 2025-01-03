@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { player } from '../../models/game';
+import { player } from '../../context/player-context';
 
 const Building = () => (
  <div>
