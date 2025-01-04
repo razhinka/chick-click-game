@@ -1,16 +1,27 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import Building from '../Building/Building';
-import { Player } from '../../context/player-context';
+import Building from '../Building/Building.tsx';
+import './BuildingList.css'
+import { Player } from '../../context/player-context.tsx';
 
-const BuildingList = () => (
-   <Building player={player}>
-      BuildingList Component
-   </Building>
-);
+interface Props {
+   player: Player,
+   setPlayer: (player: Player) => void,
+}
+
+const BuildingList = (props: Props) => {
+   return (
+      <div className="building-list-container">
+         {
+            props.player.buildings.map((element, i) => (
+               <Building player={props.player} setPlayer={props.setPlayer} buildingIndex={0}/>
+            ))
+         }
+      </div>
+   );
+}
 
 BuildingList.propTypes = {};
 
-BuildingList.defaultProps = {player};
+BuildingList.defaultProps = {};
 
 export default BuildingList;

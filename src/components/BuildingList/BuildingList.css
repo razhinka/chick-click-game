@@ -1,0 +1,7 @@
+.building-list-container {
+    border-left: solid 5px black;
+    font-size: calc(10px + 2vmin);
+    background-color: #454c5a;
+    width: 100%;
+    display: inline;
+}

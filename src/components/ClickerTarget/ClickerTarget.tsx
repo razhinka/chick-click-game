@@ -14,18 +14,20 @@ const ClickerTarget = (props: Props) => {
   const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
     console.log("Chick was Clicked!");
     let playerCopy = {...player}
-    playerCopy.score += 1;
-    playerCopy.totalScore += 1;
+    playerCopy.score += playerCopy.baseClickPower;
+    playerCopy.totalScore += playerCopy.baseClickPower;
     setPlayer(playerCopy)
   } 
   return (
-    <div className="chick-target" draggable="false">
-      <p> Player name: {player.name} </p>
-      <div onClick={handleClick} draggable="false">
-        <img src={chick} className="chick-style" draggable="false"/>
+    <div className='chick-container'>
+        <div className="chick-target" draggable="false">
+        <p> Имя игрока: {player.name} </p>
+        <p> Яички: {player.score.toFixed(0)}</p>
+        <p> Яичек в секунду: {player.baseScorePerSecond.toFixed(0)}</p>
+        <div onClick={handleClick} draggable="false">
+          <img src={chick} className="chick-style" draggable="false"/>
+        </div>
       </div>
-      <p> Score: {player.score}</p>
-      <p> Total score: {player.totalScore}</p>
     </div>
   );
 }

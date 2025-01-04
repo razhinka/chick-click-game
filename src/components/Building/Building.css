@@ -1,0 +1,39 @@
+.building-container {
+    border-style: solid;
+    margin: 0.3em;
+    display: flex;
+    min-height: 3vh;
+    max-height: 20vh;
+    background: #414e5a;
+    gap: 20px;
+    cursor: pointer;
+}
+
+.building-info {
+    margin: 0;
+    padding: 10px;
+    flex-grow: 1;
+    line-height: 0.2;
+    text-align: left;
+    font-size: 3vh;
+    margin-left: 1em;
+}
+
+.building-icon {
+    margin-right: 0.7em;
+    padding-bottom: 0.5em;
+    min-height: 2.8vh;
+    max-height: 19.8vh;
+}
+
+.building-price.cant-buy {
+    color: red;
+}
+
+.amount {
+    opacity: 0.4;
+}
+
+.locked {
+
+}
