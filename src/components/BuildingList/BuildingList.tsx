@@ -13,7 +13,7 @@ const BuildingList = (props: Props) => {
       <div className="building-list-container">
          {
             props.player.buildings.map((element, i) => (
-               <Building player={props.player} setPlayer={props.setPlayer} buildingIndex={0}/>
+               <Building key={i} player={props.player} setPlayer={props.setPlayer} buildingIndex={i}/>
             ))
          }
       </div>
