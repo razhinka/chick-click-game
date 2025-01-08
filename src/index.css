@@ -1,7 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&display=swap');
 
+@font-face {
+  font-family: 'Comicsman One';
+  src: url('fonts/ofont.ru_Comicsman\ One.ttf');
+}
+
+@font-face {
+  font-family: 'bip';
+  src: url('fonts/bip.ttf');
+}
+
 body {
-  font-family: 'Baloo 2', Comic Sans MS, sans-serif;
+  font-family: 'bip', sans-serif;
   overflow: hidden;
   margin: 0;
 }

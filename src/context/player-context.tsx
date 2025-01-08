@@ -1,50 +1,41 @@
-import chick from '../img/chick.png'
-import upgrade1 from '../img/upgrade1.png'
-import upgrade2 from '../img/upgrade2.png'
-
 export interface Player {
-    name: String,
+    name: string,
     score: number,
     baseClickPower: number,
     baseScorePerSecond: number,
+    maxScore: number,
     totalScore: number,
-    buildings: Array<Building>
+    buildings: Array<Building>,
+    upgrades: Array<Upgrade>,
 }
 
 export interface Building {
-    name: String,
+    index: number,
+    name: string,
     amount: number,
     bonusPerClick?: number,
     bonusPerSecond?: number,
+    visibleAt?: number,
+    unlocksAt?: number,
     basePrice: number,
     price: number,
     iconPath: string,
 }
 
-export const defaultBuilding : Building = {
-    name: "Курочка",
-    amount: 0,
-    bonusPerClick: 1,
-    bonusPerSecond: 1,
-    basePrice: 100,
-    price: 100,
-    iconPath: upgrade1,
+export interface Upgrade {
+    name: string,
+    price: number,
+    description?: string,
+    unlockCondition?: (player: Player) => boolean,
+    clickModifier?: number,
+    buildingId?: number,
+    perSecondModifier?: number,
+    iconPath: string,
 }
 
-export const defaultBuilding2 : Building = {
-    name: "Автоклюв",
-    amount: 0,
-    bonusPerSecond: 10,
-    basePrice: 200,
-    price: 200,
-    iconPath: upgrade2,
-}
-
-export const defaultPlayer: Player = {
-    name: "Герой жопы",
-    score: 0,
-    baseClickPower: 1,
-    baseScorePerSecond: 0,
-    totalScore: 0,
-    buildings: [defaultBuilding, defaultBuilding2],
+export interface OnUpdateUpgrade {
+    name: string,
+    price: number,
+    unlockCondition?: (player: Player) => boolean,
+    onUpdate: (player: Player, setPlayer: (player: Player) => void) => void
 }

@@ -3,27 +3,50 @@
     margin: 0.3em;
     display: flex;
     min-height: 3vh;
-    max-height: 20vh;
+    max-height: 35vh;
     background: #414e5a;
     gap: 20px;
     cursor: pointer;
+    transition: all .2s ease-in-out;
+}
+
+.building-container:hover:not(:active) {
+    background: #5a6c7c;
+    transform: scale(1.01);
+}
+
+.building-container:hover:active {
+    background: #414e5a;
+    transition: all .05s ease-in-out;
 }
 
 .building-info {
     margin: 0;
     padding: 10px;
     flex-grow: 1;
-    line-height: 0.2;
+    line-height: 1;
     text-align: left;
-    font-size: 3vh;
+    font-size: calc(10px + 1.5vmin);;
+    white-space: nowrap;
     margin-left: 1em;
+}
+
+.building-info *{
+    margin: 0.4em;
 }
 
 .building-icon {
     margin-right: 0.7em;
     padding-bottom: 0.5em;
-    min-height: 2.8vh;
-    max-height: 19.8vh;
+    min-width: calc(10px + 2.8vmin);
+    min-height: calc(10px + 2.8vmin);
+    max-height: calc(10px + 19.8vmin);
+}
+
+.building-price{
+    display: flex;
+    vertical-align: center;
+    font-size: calc(10px + 2vmin);;
 }
 
 .building-price.cant-buy {
@@ -34,6 +57,24 @@
     opacity: 0.4;
 }
 
-.locked {
+.egg-currency {
+    display: inline;
+    margin: 0 0.125em;
+    padding: 0;
+    vertical-align: sub;
+    min-height: 7vh;
+    max-height: 10vh;
+}
 
+.building-icon.locked {
+    filter: brightness(0%);
+}
+
+@keyframes bounse {
+    from {
+        scale: 1;
+    };
+    to {
+        scale: 1.1;
+    }
 }

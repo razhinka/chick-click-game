@@ -1,55 +1,56 @@
 import React from 'react';
 import './Building.css'
+import eggCurrency from '../../img/egg.png'
 import { Player } from '../../context/player-context.tsx';
+import { formatNumber } from '../../util/number-formatter.tsx';
 
 interface Props {
    player: Player,
-   setPlayer: (player: Player) => void,
-   buildingIndex: number
+   buildingIndex: number,
+   recalculatePlayerStats: (player: Player) => void;
 }
 
 const Building = (props: Props) => {
-   const building = props.player.buildings[props.buildingIndex]
+   const {player, buildingIndex, recalculatePlayerStats} = props;
+   const building = player.buildings[buildingIndex]
+   const buildingMultiplier = player.upgrades
+                  .filter((upgrade)=> upgrade.buildingId !== undefined && upgrade.buildingId == building.index)
+                  .reduce((a, v) => v.perSecondModifier !== undefined ?  a = a * v.perSecondModifier : a, 1);
 
    const handleClick = () => {
-      if(props.player.score >= building.price){
-         let playerCopy = {...props.player};
+      if(player.score >= building.price){
+         let playerCopy = {...player};
          playerCopy.score -= building.price;
-         if(building.bonusPerClick != undefined){
-            playerCopy.baseClickPower += building.bonusPerClick;
-         }
-         if(building.bonusPerSecond != undefined){
-            playerCopy.baseScorePerSecond += building.bonusPerSecond;
-         }
-         let buildingCopy = {...props.player.buildings[props.buildingIndex]}
+         let buildingCopy = {...player.buildings[buildingIndex]}
          buildingCopy.amount += 1;
          buildingCopy.price = buildingCopy.price * 1.15;
-         playerCopy.buildings[props.buildingIndex] = buildingCopy;
-         props.setPlayer(playerCopy);
+         playerCopy.buildings[buildingIndex] = buildingCopy;
+         recalculatePlayerStats(playerCopy);
       }
-
    }
 
    return (
       <div className='building-container' onClick={handleClick}>
         <div className='building-info'>
            <h2 className='building-name'>
-              {building.name} <a className='amount'>{building.amount}</a>
+              {building.unlocksAt == undefined || building.unlocksAt <= player.maxScore ? building.name : "???"} <a className='amount'>{building.amount}</a>
            </h2>
            <div className='building-bonus'>
-               {building.bonusPerClick != undefined && 
-                  <p>Бонус за нажатие: {building.bonusPerClick}</p>
+               {building.bonusPerClick !== undefined && 
+                  <p>За нажатие: {building.bonusPerClick}</p>
                }
-               {building.bonusPerSecond != undefined && 
-                  <p>Бонус в секунду: {building.bonusPerSecond}</p>
+               {building.bonusPerSecond !== undefined && 
+                  <p>В секунду: {formatNumber(building.bonusPerSecond * buildingMultiplier)}</p>
                }
            </div>
-           <div className={building.price < props.player.score ? 'building-price' : 'building-price cant-buy'}>
-              Цена: {building.price.toFixed(0)} 
+           <div className={building.price <= player.score ? 'building-price' : 'building-price cant-buy'}>
+              <img src={eggCurrency} className='egg-currency'/> <p>{formatNumber(building.price)}</p>
            </div>
         </div>
         <div className='building-icon-container'>
-           <img src={building.iconPath} className='building-icon'/>
+           <img src={building.iconPath} className={
+               building.unlocksAt == undefined || building.unlocksAt <= player.maxScore ? 'building-icon' : 'building-icon locked'
+            }/>
         </div>
       </div>
      );

@@ -2,18 +2,29 @@ import React from 'react';
 import Building from '../Building/Building.tsx';
 import './BuildingList.css'
 import { Player } from '../../context/player-context.tsx';
+import UpgradeList from '../UpgradeList/UpgradeList.tsx';
 
 interface Props {
    player: Player,
-   setPlayer: (player: Player) => void,
+   recalculatePlayerStats: (player: Player) => void,
 }
 
 const BuildingList = (props: Props) => {
+   const {player, recalculatePlayerStats} = props;
+
    return (
       <div className="building-list-container">
+         <UpgradeList player={player} recalculatePlayerStats={recalculatePlayerStats}/>
          {
-            props.player.buildings.map((element, i) => (
-               <Building key={i} player={props.player} setPlayer={props.setPlayer} buildingIndex={i}/>
+            player.buildings
+            .filter((building) =>{
+               return building.visibleAt == undefined || building.visibleAt < player.maxScore;
+            })
+            .map((element, i) => (
+               <Building key={i} 
+               player={player}
+               buildingIndex={i}
+               recalculatePlayerStats={recalculatePlayerStats} />
             ))
          }
       </div>
