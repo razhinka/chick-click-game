@@ -61,7 +61,7 @@
     display: inline;
     margin: 0 0.125em;
     padding: 0;
-    vertical-align: sub;
+    vertical-align: middle;
     min-height: 7vh;
     max-height: 10vh;
 }

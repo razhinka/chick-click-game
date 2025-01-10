@@ -28,7 +28,7 @@
 }
 
 .chick-sun {
-    position:absolute; 
+    position: absolute; 
     height: 60vmin;
     animation: rotate 60s linear infinite;
 }
@@ -69,6 +69,7 @@
 .eggs-per-click {
     position: fixed;
     pointer-events: none;
+    z-index: 10;
     animation: fly 1s forwards;
 }
 
@@ -78,7 +79,7 @@
         opacity: 1;
     }
     100% {
-        transform: translateY(-100px) translateX(50px) rotate;
+        transform: translateY(-100px) translateX(50px) rotate(30deg);
         opacity: 0;
     }
 }

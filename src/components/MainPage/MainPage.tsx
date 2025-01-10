@@ -4,6 +4,7 @@ import ClickerTarget from '../ClickerTarget/ClickerTarget.tsx';
 import './MainPage.css'
 import { Player } from '../../context/player-context.tsx';
 import WindowFocusHandler from '../WindowFocusHandler/WindowFocusHandler.tsx';
+import MenuComponentSelector from '../MenuComponent/MenuComponent.tsx';
 
 interface Props {
    player: Player,
@@ -24,24 +25,33 @@ const MainPage = (props: Props) => {
 
    const recalculatePlayerStats = (player: Player) => {
       let playerCopy = {...player};
-      playerCopy.baseScorePerSecond = playerCopy.buildings
+      playerCopy.buildings = playerCopy.buildings.map((building) => {
+         return {
+            ...building,
+            currentMultiplier: player.upgrades
+               .filter((upgrade)=> upgrade.buildingId !== undefined && upgrade.buildingId == building.index)
+               .reduce((a, v) => v.perSecondModifier !== undefined ?  a = a * v.perSecondModifier : a, 1)
+         }
+      });
+      let buildingCpsBonus = playerCopy.buildings
+      .map(building => {
+            return building.bonusPerSecond !== undefined ? 
+               building.amount * building.bonusPerSecond * building.currentMultiplier
+             : 0;
+         }
+      ).reduce((a,v)=> a = a + v, 0);
+      let buildingsClickBonus = playerCopy.buildings
          .map(building => {
-               let bonusMultiplier = player.upgrades
-                  .filter((upgrade)=> upgrade.buildingId !== undefined && upgrade.buildingId == building.index)
-                  .reduce((a, v) => v.perSecondModifier !== undefined ?  a = a * v.perSecondModifier : a, 1);
                return building.bonusPerSecond !== undefined ? 
-                  building.amount * building.bonusPerSecond * bonusMultiplier
-                : 0;
+                  building.amount * building.bonusPerSecond  * building.currentMultiplier
+               : 0;
             }
-         ).reduce((a,v)=> a = a + v, 0);
-      playerCopy.baseClickPower = 1 + playerCopy.buildings
-         .map(building => {
-               let bonusMultiplier = player.upgrades
-                  .filter((upgrade)=> upgrade.buildingId !== undefined && upgrade.buildingId == building.index)
-                  .reduce((a, v) => v.perSecondModifier !== undefined ?  a = a * v.perSecondModifier : a, 1);
-               return building.bonusPerSecond !== undefined ? building.amount * building.bonusPerSecond * bonusMultiplier: 0;
-            }
-         ).reduce((a,v)=> a = a + v, 1) * 0.1;
+         ).reduce((a,v)=> a = a + v, 0) * 0.1;
+      let upgradeClickPowerMultiplier = playerCopy.upgrades
+         .reduce((a,v)=> v.clickModifier !== undefined ? a * v.clickModifier : a, 1)
+      
+      playerCopy.baseScorePerSecond = buildingCpsBonus;
+      playerCopy.baseClickPower = (1 + buildingsClickBonus) * upgradeClickPowerMultiplier;
       setPlayer(playerCopy)
    }
 
@@ -52,6 +62,7 @@ const MainPage = (props: Props) => {
 
    return (
       <div className="Main-page">
+         <MenuComponentSelector player={player} setPlayer={setPlayer}/>
          <ClickerTarget player={player} setPlayer={setPlayer}/>
          <BuildingList player={player} recalculatePlayerStats={recalculatePlayerStats}/>
          <WindowFocusHandler player={player} setPlayer={setPlayer}/>

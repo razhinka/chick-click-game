@@ -5,10 +5,7 @@
     background-color: #5d6679;;
     height: 20vmin;
     transition: height 0.3s ease;
-    scrollbar-width:thin;
-    scrollbar-color: #454c5a #e0e0e0;
-    overflow-y: auto;
-    scrollbar-gutter: stable;
+    border-radius: 8px;
 }
 
 .upgrade-container-empty-message {
@@ -18,17 +15,23 @@
 }
 
 .upgrade-container-header {
-    margin: -2px;
-    background-color: aliceblue;
-    border: solid 4px black;
+    width: 100%;
+    background: linear-gradient(100deg, #666, #444);
+    border-bottom: solid 4px black;
 }
 
 .upgrade-container-list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, 3.3em);
+    grid-template-columns: repeat(auto-fill, minmax(3.3em, 1fr));
     justify-content: start;
     gap: 0.01em;
     min-height: 80%;
     margin: 4px;
+    height: 20vmin;
     border: solid 3px black;
+    scrollbar-width:thin;
+    scrollbar-color: #454c5a #e0e0e0;
+    overflow-y: auto;
+    scrollbar-gutter: unset;
+    border-radius: 5px;
 }

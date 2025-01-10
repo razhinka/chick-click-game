@@ -13,9 +13,6 @@ interface Props {
 const Building = (props: Props) => {
    const {player, buildingIndex, recalculatePlayerStats} = props;
    const building = player.buildings[buildingIndex]
-   const buildingMultiplier = player.upgrades
-                  .filter((upgrade)=> upgrade.buildingId !== undefined && upgrade.buildingId == building.index)
-                  .reduce((a, v) => v.perSecondModifier !== undefined ?  a = a * v.perSecondModifier : a, 1);
 
    const handleClick = () => {
       if(player.score >= building.price){
@@ -36,11 +33,8 @@ const Building = (props: Props) => {
               {building.unlocksAt == undefined || building.unlocksAt <= player.maxScore ? building.name : "???"} <a className='amount'>{building.amount}</a>
            </h2>
            <div className='building-bonus'>
-               {building.bonusPerClick !== undefined && 
-                  <p>За нажатие: {building.bonusPerClick}</p>
-               }
                {building.bonusPerSecond !== undefined && 
-                  <p>В секунду: {formatNumber(building.bonusPerSecond * buildingMultiplier)}</p>
+                  <p>В секунду: {formatNumber(building.bonusPerSecond * building.currentMultiplier)}</p>
                }
            </div>
            <div className={building.price <= player.score ? 'building-price' : 'building-price cant-buy'}>

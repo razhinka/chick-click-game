@@ -1,6 +1,7 @@
 import React, { MouseEvent, ReactNode, useRef } from 'react';
 import { Upgrade, Player } from '../../context/player-context.tsx';
 import './UpgradeTooltip.css';
+import eggCurrency from '../../img/egg.png';
 import ReactDOM from 'react-dom';
 import { formatNumber } from '../../util/number-formatter.tsx';
 
@@ -47,7 +48,7 @@ const UpgradeTooltip = (props: Props) => {
       >
          {children}
          {visible && ReactDOM.createPortal(<div 
-            className='upgrade-tooltip'
+            className={`upgrade-tooltip ${tooltipRef.current == undefined ? '' : 'ready'}`}
             style={{ left: coords.x, top: coords.y  + 5}}
             ref={tooltipRef}
           >
@@ -63,8 +64,9 @@ const UpgradeTooltipContent = (props: Props) => {
       <div className='upgrade-tooltip-content'>
          <p className='upgrade-tooltip-header'>{upgrade.name}</p>
          <div className='upgrade-tooltip-info'>
-            <p>Стоимость: {formatNumber(upgrade.price)}</p>
+            <p className={player.score < upgrade.price ? 'cant-buy' : ''}>{formatNumber(upgrade.price)}</p>
             <p>{upgrade.description}</p>
+            {upgrade.dinamicDescriptionPart !== undefined && upgrade.dinamicDescriptionPart(player)}
          </div>
       </div>
    )

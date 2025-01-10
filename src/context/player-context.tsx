@@ -5,6 +5,7 @@ export interface Player {
     baseScorePerSecond: number,
     maxScore: number,
     totalScore: number,
+    startedAt: Date,
     buildings: Array<Building>,
     upgrades: Array<Upgrade>,
 }
@@ -13,8 +14,8 @@ export interface Building {
     index: number,
     name: string,
     amount: number,
-    bonusPerClick?: number,
-    bonusPerSecond?: number,
+    bonusPerSecond: number,
+    currentMultiplier: number,
     visibleAt?: number,
     unlocksAt?: number,
     basePrice: number,
@@ -26,10 +27,21 @@ export interface Upgrade {
     name: string,
     price: number,
     description?: string,
+    dinamicDescriptionPart?: (player: Player) => React.JSX.Element,
     unlockCondition?: (player: Player) => boolean,
     clickModifier?: number,
     buildingId?: number,
     perSecondModifier?: number,
+    iconPath: string
+}
+
+export interface Buff {
+    name: string,
+    description: string,
+    ttl: number,
+    clickModifier?: number,
+    perSecondModifier?: number,
+    unlockCondition?: (player: Player) => boolean,
     iconPath: string,
 }
 

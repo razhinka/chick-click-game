@@ -74,7 +74,7 @@ const ClickerTarget = (props: Props) => {
                 top: eggs.top,
                 animationDuration: `2s`
               }}>
-              <img src={eggCurrency} className='egg-currency'/> {formatNumber(eggs.eggsPerClick, 1)}
+              + {formatNumber(eggs.eggsPerClick, 1)}
             </div>
           ))
         }

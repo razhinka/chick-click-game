@@ -1,0 +1,88 @@
+.menu-component-selector-container {
+    position: absolute;
+    margin: 2em;
+    cursor: pointer;
+    z-index: 5;
+}
+
+.menu-component-selector {
+    max-height: 10vh;
+}
+
+.menu-component-container {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    z-index: 10;
+    color: #ddd;
+    background: linear-gradient(45deg, #333, #444);
+    border-right: solid 4px black;
+    width: 50%;
+    transition: left .5s ease-out;
+}
+
+.menu-component-tabs-container {
+    display: flex;
+    background-color: #444;
+    border-bottom: 2px solid #001933;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin: 1em 0;
+    border-radius: 5px 5px 0 0;
+    font-size: 2em;
+}
+
+.menu-component-tab {
+    border: solid 3px black;
+    border-radius: 10px 10px 0 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.1s;
+}
+
+.menu-component-tab:hover {
+    background-color: #e7f1ff; /* —ветлый цвет при наведении */
+}
+
+.menu-component-tab.active {
+    background-color: #555; /* ÷вет активной вкладки */
+    color: white; /* ÷вет текста активной вкладки */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transform: scale(0.95);
+}
+
+.menu-component-tab-content {
+    padding: 1em;
+    background: linear-gradient(135deg, #444, #666);
+    border: 1px solid #ccc;
+    transition: background-color 0.3s, color 0.3s;
+    border-radius: 5px;
+}
+
+.menu-component-close {
+    margin: 0.3em;
+    padding: 15px 15px 15px 15px;
+    width: 7em;
+    position: absolute;
+    top: 0;
+    right: 0;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background:linear-gradient(100deg, #333, #444);
+    text-align: right;
+    margin-right: 2em;
+    cursor: pointer;
+}
+
+
+.menu-component-container.open{
+    left:0; 
+}
+
+.menu-component-container.closed{
+    left: -55%;
+}
+
+.menu-component-stats-container {
+    width: 100%;
+    padding: 2em;
+}

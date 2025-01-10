@@ -19,15 +19,16 @@ const UpgradeList = (props: Props) => {
          <div className='upgrade-container-header'>Магазин улучшений</div>
             <div className='upgrade-container-list'>
                <div className='upgrade-container-empty-message' style={{
-                  display: `${upgrades.filter((upgrade) => upgrade.unlockCondition == undefined || 
-                     (!player.upgrades.some(existingUpgrade => existingUpgrade === upgrade) && upgrade.unlockCondition(player))).length == 0 
+                  display: `${upgrades.filter((upgrade) => !player.upgrades.some(existingUpgrade => existingUpgrade === upgrade) && 
+                     (upgrade.unlockCondition == undefined || upgrade.unlockCondition(player))).length == 0 
                      ? 'block':'none'}`
                }}>Доступных улучшений нет</div>
                {
-                  upgrades.filter((upgrade) => upgrade.unlockCondition == undefined || 
-                     (!player.upgrades.some(existingUpgrade => existingUpgrade === upgrade) && upgrade.unlockCondition(player)))
-                     .map((upgrade) => (
-                        <UpgradeItem upgrade={upgrade} player={player} recalculatePlayerStats={recalculatePlayerStats}/>
+                  upgrades.filter((upgrade) => !player.upgrades.some(existingUpgrade => existingUpgrade.name === upgrade.name) && 
+                  (upgrade.unlockCondition == undefined || upgrade.unlockCondition(player)))
+                     .sort((a,b) => a.price - b.price)
+                     .map((upgrade, index) => (
+                        <UpgradeItem key={index} upgrade={upgrade} player={player} recalculatePlayerStats={recalculatePlayerStats}/>
                      ))
                }
          </div>

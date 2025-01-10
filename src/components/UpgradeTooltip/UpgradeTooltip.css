@@ -1,6 +1,7 @@
 .upgrade-tooltip {
     position: fixed;
     background-color: #333; 
+    visibility: hidden;
     font-size: 2em;
     color: #fff; 
     padding: 5px 10px; 
@@ -10,9 +11,25 @@
     pointer-events: none; /* Чтобы курсор проходил сквозь tooltip */
 }
 
+.upgrade-tooltip.ready {
+    visibility: initial;
+}
+
 .upgrade-tooltip-header {
     font-size: 1em;
     line-height: 0.2em;
+}
+
+.upgrade-tooltip-price {
+    display: flex;
+}
+
+.cant-buy {
+    color: red;
+}
+
+.upgrade-tooltip-price .egg-currency {
+    max-height: 1em;
 }
 
 .upgrade-tooltip-info {
