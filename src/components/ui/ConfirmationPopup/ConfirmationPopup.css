@@ -1,0 +1,57 @@
+
+.confirmation-dialog-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5); /* Прозрачный фон */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.confirmation-dialog {
+    background: #fff; /* Белый фон для диалога */
+    padding: 2em;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); /* Тень для эффекта поднятия */
+    max-width: 400px; /* Максимальная ширина диалога */
+    width: 90%; /* Ширина диалога */
+}
+
+.confirmation-dialog h3 {
+    margin-bottom: 1em; /* Отступ снизу заголовка */
+}
+
+.confirmation-dialog .button-group {
+    display: flex;
+    justify-content: space-between; /* Пространство между кнопками */
+}
+
+.confirmation-dialog button {
+    padding: 0.5em 1em; /* Отступ для кнопок */
+    border: none;
+    border-radius: 5px; /* Закругление кнопок */
+    cursor: pointer; /* Указатель для курсора */
+    transition: background 0.3s; /* Плавный переход для фона */
+}
+
+.confirmation-dialog .confirm-button {
+    background: #ff4d4d; /* Красный фон для кнопки удаления */
+    color: white; /* Белый текст */
+}
+
+.confirmation-dialog .cancel-button {
+    background: #aaa; /* Серый фон для кнопки отмены */
+    color: black; /* Черный текст */
+}
+
+/* Эффект наведения для кнопок */
+.confirmation-dialog .confirm-button:hover {
+    background: #ff1a1a; /* Более темный красный при наведении */
+}
+
+.confirmation-dialog .cancel-button:hover {
+    background: #888; /* Более темный серый при наведении */
+}

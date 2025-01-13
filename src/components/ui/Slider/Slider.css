@@ -1,0 +1,44 @@
+.slider-container { 
+    display: flex; 
+    align-items: center;
+    max-height: 10em;
+    box-sizing: border-box;
+    overflow: hidden;
+    width: 100%;
+}
+
+.slider-icon {
+    cursor: pointer;
+    margin-right: 1em;
+    height: 5vw;
+    width: auto;
+    object-fit: contain;
+}
+
+.slider-range {
+    appearance: none; /* Удаление стандартного стиля для Webkit */
+    width: 80%; /* Полная ширина слайдера */
+    height: 0.5vw; /* Высота самого слайдера */
+    background: linear-gradient(135deg, #666, #888); /* Более светлый фон сградиентом */
+    border-radius: 10px; /* Закругление углов */
+    outline: none; /* Удаление рамки при фокусе */
+    cursor: pointer; /* Указатель на курсор */
+}
+
+/* Дополнительно стилизуйте слайдер */
+.slider-range::-webkit-slider-thumb {
+    appearance: none; /* Удаление стандартного стиля для Webkit */
+    height: 2vw; /* Высота ползунка */
+    width: 2vw; /* Ширина ползунка */
+    background: #fff; /* Цвет ползунка белый */
+    border: 2px solid #666; /* Тень вокруг ползунка */
+    border-radius: 50%; /* Круглая форма */
+    cursor: pointer; /* Указатель на курсор */
+    margin-top: -0.25vw; /* Сдвиг ползунка для центрирования */
+}
+
+/* Стили для ползунка при наведении */
+.slider-range::-webkit-slider-thumb:hover {
+    background: #ccc; /* Цвет при наведении */
+
+}

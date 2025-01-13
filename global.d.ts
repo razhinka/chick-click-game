@@ -1,4 +1,8 @@
-declare module "*.png" {
-    const value: any;
-    export = value;
+declare global {
+    interface Window {
+        YaGames: any;
+        ysdk: any;
+    }
 }
+
+export {};

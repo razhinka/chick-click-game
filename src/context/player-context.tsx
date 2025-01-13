@@ -6,8 +6,17 @@ export interface Player {
     maxScore: number,
     totalScore: number,
     startedAt: Date,
+    endedAt: Date,
+    gameTick: number,
+    bonusEggsGathered: number,
     buildings: Array<Building>,
     upgrades: Array<Upgrade>,
+    settings: Settings,
+}
+
+export interface Settings {
+    surroundingVolume: number,
+    surroundingVolumeMuted: boolean,
 }
 
 export interface Building {

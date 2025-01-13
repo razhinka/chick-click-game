@@ -2,12 +2,12 @@
 
 @font-face {
   font-family: 'Comicsman One';
-  src: url('fonts/ofont.ru_Comicsman\ One.ttf');
+  src: url('./assets/fonts/ofont.ru_Comicsman\ One.ttf');
 }
 
 @font-face {
   font-family: 'bip';
-  src: url('fonts/bip.ttf');
+  src: url('./assets/fonts/bip.ttf');
 }
 
 body {

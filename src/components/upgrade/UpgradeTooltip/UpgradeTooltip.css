@@ -1,0 +1,35 @@
+.upgrade-tooltip {
+    position: fixed;
+    background-color: #333; 
+    visibility: hidden;
+    font-size: 2em;
+    color: #fff; 
+    padding: 5px 10px; 
+    border: solid 4px #000;
+    border-radius: 15px;
+    z-index: 1000; 
+    pointer-events: none; /* Чтобы курсор проходил сквозь tooltip */
+    animation-delay: 0.2s;
+    transition: visibility 0.2s ease
+}
+.upgrade-tooltip-header {
+    font-size: 1em;
+    line-height: 0.2em;
+}
+
+.upgrade-tooltip-price {
+    display: flex;
+}
+
+.cant-buy {
+    color: red;
+}
+
+.upgrade-tooltip-price .egg-currency {
+    max-height: 1em;
+}
+
+.upgrade-tooltip-info {
+    font-size: 0.7em;
+    line-height: 0.1em;
+}

@@ -1,23 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <!-- Yandex Games SDK -->
-    <script src="/sdk.js"></script>
-    <script>
-      YaGames.init().then(ysdk =>{
-        console.log('Yandex SDK was initialized');
-        window.ysdk = ysdk;
-        ysdk.features.LoadingAPI?.ready();
-        ysdk.features.GameplayAPI?.start();
-      })
-    </script>
-    <title>Chicken Click</title>
-  </head>
-  <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root">Sample text</div>
-    <!--
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" type="image/x-icon" href="./icon.png">
+  <title>Chicken Click</title>
+</head>
+
+<body>
+  <noscript>You need to enable JavaScript to run this app.</noscript>
+  <div id="root">Sample text</div>
+  <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
 
@@ -27,5 +20,6 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
-  </body>
+</body>
+
 </html>
