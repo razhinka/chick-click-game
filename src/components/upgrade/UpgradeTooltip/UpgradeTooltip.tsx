@@ -27,7 +27,7 @@ const UpgradeTooltipContent = (props: Props) => {
       <div className='upgrade-tooltip-content'>
          <p className='upgrade-tooltip-header'>{upgrade.name}</p>
          <div className='upgrade-tooltip-info'>
-            <p className={player.score < upgrade.price ? 'cant-buy' : ''}>{formatNumber(upgrade.price)}</p>
+            <p className={player.score < upgrade.price ? 'cant-buy' : ''}>{formatNumber(upgrade.price, player.settings.suffix)}</p>
             <p>{upgrade.description}</p>
             {upgrade.dinamicDescriptionPart !== undefined && upgrade.dinamicDescriptionPart(player)}
          </div>

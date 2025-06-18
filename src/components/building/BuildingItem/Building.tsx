@@ -37,11 +37,11 @@ const Building = (props: Props) => {
             </BuildingTooltip>
             <div className='building-bonus'>
                {building.bonusPerSecond !== undefined &&
-                  <p>В секунду: {formatNumber(building.bonusPerSecond * building.currentMultiplier)}</p>
+                  <p>В секунду: {formatNumber(building.bonusPerSecond * building.currentMultiplier, player.settings.suffix)}</p>
                }
             </div>
             <div className={building.price <= player.score ? 'building-price' : 'building-price cant-buy'}>
-               <img src={eggCurrency} className='egg-currency' /> <p>{formatNumber(building.price)}</p>
+               <img src={eggCurrency} className='egg-currency' /> <p>{formatNumber(building.price, player.settings.suffix)}</p>
             </div>
          </div>
          <div className='building-icon-container'>

@@ -10,7 +10,13 @@ export interface Player {
     settings: Settings,
 }
 
+export enum Suffix {
+    SHORT,
+    LONG,
+}
+
 export interface Settings {
+    suffix: Suffix,
     surroundingVolume: number,
     surroundingVolumeMuted: boolean,
 }

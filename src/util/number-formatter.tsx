@@ -1,10 +1,12 @@
+import { Suffix } from "../context/player-context.tsx";
+
 interface NumberFormat {
-    digits: number,
-    suffix: string,
-    shortSuffix: string,
+    digits: number;
+    suffix: string;
+    shortSuffix: string;
 }
 
-const numberFormars : NumberFormat[] = [
+const numberFormats: NumberFormat[] = [
     {
         digits: 6,
         suffix: "Миллионов",
@@ -42,18 +44,28 @@ const numberFormars : NumberFormat[] = [
     },
 ]
 
-export const formatNumber = (num: number, precision?: number) => {
-    if(num === undefined){
-        return "";
+export const formatNumber = (num: number, suffix: Suffix, precision?: number) => {
+    if (num === 0) {
+        return "0";
     }
-    if(num.toFixed(0).length - 1 < 6){
+    const absNum = Math.abs(num);
+    if (absNum < 1e6) {
         return num.toFixed(precision === undefined ? 0 : precision);
     }
-    const numLength = num.toFixed(0).length;
-    const format = numberFormars.find(format => format.digits === Math.floor(numLength / 3) * 3);
-    if(format !== undefined){
-        return (num / Math.pow(10, format.digits)).toFixed(3) + " " + format.suffix;
-    }else{
+    
+    const exponent = Math.floor(Math.log10(absNum));
+    let selectedFormat : NumberFormat | null = null;
+    for (let i = numberFormats.length - 1; i >= 0; i--) {
+        if (numberFormats[i].digits <= exponent) {
+            selectedFormat = numberFormats[i];
+            break;
+        }
+    }
+
+    if (selectedFormat !== null) {
+        const value = num / Math.pow(10, selectedFormat.digits);
+        return value.toFixed(3) + " " + (suffix === Suffix.LONG ? selectedFormat.suffix : selectedFormat.shortSuffix);
+    } else {
         return num.toExponential(3);
     }
 }

@@ -85,11 +85,11 @@ const MenuStatsComponent = (props: MenuStatsProps) => {
          <h1>Статистика</h1>
          <div className='menu-component-stats-player'>
             <p>Имя игрока: {player.name}</p>
-            <p>Количество яичек: {formatNumber(player.score)}</p>
-            <p>Количество яичек за все время: {formatNumber(player.stats.totalScore)}</p>
-            <p>Количество яичек за клик: {formatNumber(player.baseClickPower, 1)}</p>
-            <p>Количество яичек в секунду: {formatNumber(player.baseScorePerSecond)}</p>
-            <p>Максимальное количество яиц за все время: {formatNumber(player.stats.maxScore)}</p>
+            <p>Количество яичек: {formatNumber(player.score, player.settings.suffix)}</p>
+            <p>Количество яичек за все время: {formatNumber(player.stats.totalScore, player.settings.suffix)}</p>
+            <p>Количество яичек за клик: {formatNumber(player.baseClickPower, player.settings.suffix, 1)}</p>
+            <p>Количество яичек в секунду: {formatNumber(player.baseScorePerSecond, player.settings.suffix)}</p>
+            <p>Максимальное количество яиц за все время: {formatNumber(player.stats.maxScore, player.settings.suffix)}</p>
             <p>Количество зданий: {player.buildings.reduce((a, v) => a + v.amount, 0)}</p>
             <p>Количество улучшений: {player.upgrades.length}</p>
             <p>Время в игре: {(calculateTimeElapsed())}</p>

@@ -62,8 +62,8 @@ const ClickerTarget = (props: Props) => {
   return (
     <div className='chick-container' draggable="false">
         <p> Имя игрока: {player.name} </p>
-        <p> <img src={eggCurrency} className='egg-currency'/> {formatNumber(player.score)}</p>
-        <p> <img src={eggCurrency} className='egg-currency'/> в секунду {formatNumber(player.baseScorePerSecond)}</p>
+        <p> <img src={eggCurrency} className='egg-currency'/> {formatNumber(player.score, player.settings.suffix)}</p>
+        <p> <img src={eggCurrency} className='egg-currency'/> в секунду {formatNumber(player.baseScorePerSecond, player.settings.suffix)}</p>
         <div className="chick-img-container" onClick={handleClick} draggable="false">
           <img id="chick-sun" src={chickSun} className='chick-sun'/>
           <img id="chick" src={chick} className="chick" draggable="false"/>
@@ -76,7 +76,7 @@ const ClickerTarget = (props: Props) => {
                 top: eggs.top,
                 animationDuration: `2s`
               }}>
-              + {formatNumber(eggs.eggsPerClick, 1)}
+              + {formatNumber(eggs.eggsPerClick, player.settings.suffix, 1)}
             </div>
           ))
         }

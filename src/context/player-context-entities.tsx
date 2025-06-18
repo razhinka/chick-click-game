@@ -21,7 +21,7 @@ import clickUpgradeIcon7 from '../assets/img/upgrades/click/click7.png'
 import clickUpgradeIcon8 from '../assets/img/upgrades/click/click8.png'
 import clickUpgradeIcon9 from '../assets/img/upgrades/click/click9.png'
 import clickUpgradeIcon10 from '../assets/img/upgrades/click/click10.png'
-import { Building, Player, Upgrade } from './player-context.tsx'
+import { Building, Player, Suffix, Upgrade } from './player-context.tsx'
 import React from 'react'
 import { formatNumber } from '../util/number-formatter.tsx'
 
@@ -38,15 +38,15 @@ const getBuildingDynamicDescription = (buildingIndex: number) => {
         return (
             <div className='dinamic-base-building-upgrade-description'>
                 <p>Производство всех зданий:
-                    {' ' + formatNumber(currentTotalBuildingProductivity)}
-                    {' => '}{formatNumber(currentTotalBuildingProductivity + currentOneBuildingProductivity)}
+                    {' ' + formatNumber(currentTotalBuildingProductivity, player.settings.suffix)}
+                    {' => '}{formatNumber(currentTotalBuildingProductivity + currentOneBuildingProductivity, player.settings.suffix)}
                 </p>
                 <p>Доля от общего производства: {formatNumber(
                     currentTotalBuildingProductivity * 100 /
-                    player.baseScorePerSecond, 2)}%{' => '}{formatNumber(
+                    player.baseScorePerSecond, player.settings.suffix, 2)}%{' => '}{formatNumber(
                         (currentTotalBuildingProductivity + currentOneBuildingProductivity) * 100 /
-                        player.baseScorePerSecond, 2)}%</p> 
-                <p>Стоимость одного яйца в секунду: {formatNumber(efficiency, 1)}</p>
+                        player.baseScorePerSecond, player.settings.suffix, 2)}%</p> 
+                <p>Стоимость одного яйца в секунду: {formatNumber(efficiency, player.settings.suffix, 1)}</p>
             </div>)
     }
 }
@@ -225,8 +225,8 @@ const clickUpgrade1: Upgrade = {
     },
     dinamicDescriptionPart: (player: Player) => {
         return (<div className='dinamic-base-click-upgrade-description'>
-            <p>Количество яиц за клик: {formatNumber(player.baseClickPower, 1)}
-                {' => '} {formatNumber(player.baseClickPower * 1.01, 1)}
+            <p>Количество яиц за клик: {formatNumber(player.baseClickPower, player.settings.suffix, 1)}
+                {' => '} {formatNumber(player.baseClickPower * 1.01, player.settings.suffix, 1)}
             </p>
         </div>)
     },
@@ -244,8 +244,8 @@ const clickUpgrade2: Upgrade = {
     },
     dinamicDescriptionPart: (player: Player) => {
         return (<div className='dinamic-base-click-upgrade-description'>
-            <p>Количество яиц за клик: {formatNumber(player.baseClickPower, 1)}
-                {' => '} {formatNumber(player.baseClickPower * 1.02, 1)}
+            <p>Количество яиц за клик: {formatNumber(player.baseClickPower, player.settings.suffix, 1)}
+                {' => '} {formatNumber(player.baseClickPower * 1.02, player.settings.suffix, 1)}
             </p>
         </div>)
     },
@@ -263,8 +263,8 @@ const clickUpgrade3: Upgrade = {
     },
     dinamicDescriptionPart: (player: Player) => {
         return (<div className='dinamic-base-click-upgrade-description'>
-            <p>Количество яиц за клик: {formatNumber(player.baseClickPower, 1)}
-                {' => '} {formatNumber(player.baseClickPower * 1.02, 1)}
+            <p>Количество яиц за клик: {formatNumber(player.baseClickPower, player.settings.suffix, 1)}
+                {' => '} {formatNumber(player.baseClickPower * 1.02, player.settings.suffix, 1)}
             </p>
         </div>)
     },
@@ -282,8 +282,8 @@ const clickUpgrade4: Upgrade = {
     },
     dinamicDescriptionPart: (player: Player) => {
         return (<div className='dinamic-base-click-upgrade-description'>
-            <p>Количество яиц за клик: {formatNumber(player.baseClickPower, 1)}
-                {' => '} {formatNumber(player.baseClickPower * 1.03, 1)}
+            <p>Количество яиц за клик: {formatNumber(player.baseClickPower, player.settings.suffix, 1)}
+                {' => '} {formatNumber(player.baseClickPower * 1.03, player.settings.suffix, 1)}
             </p>
         </div>)
     },
@@ -301,8 +301,8 @@ const clickUpgrade5: Upgrade = {
     },
     dinamicDescriptionPart: (player: Player) => {
         return (<div className='dinamic-base-click-upgrade-description'>
-            <p>Количество яиц за клик: {formatNumber(player.baseClickPower, 1)}
-                {' => '} {formatNumber(player.baseClickPower * 1.03, 1)}
+            <p>Количество яиц за клик: {formatNumber(player.baseClickPower, player.settings.suffix, 1)}
+                {' => '} {formatNumber(player.baseClickPower * 1.03, player.settings.suffix, 1)}
             </p>
         </div>)
     },
@@ -320,8 +320,8 @@ const clickUpgrade6: Upgrade = {
     },
     dinamicDescriptionPart: (player: Player) => {
         return (<div className='dinamic-base-click-upgrade-description'>
-            <p>Количество яиц за клик: {formatNumber(player.baseClickPower, 1)}
-                {' => '} {formatNumber(player.baseClickPower * 1.03, 1)}
+            <p>Количество яиц за клик: {formatNumber(player.baseClickPower, player.settings.suffix, 1)}
+                {' => '} {formatNumber(player.baseClickPower * 1.03, player.settings.suffix, 1)}
             </p>
         </div>)
     },
@@ -339,8 +339,8 @@ const clickUpgrade7: Upgrade = {
     },
     dinamicDescriptionPart: (player: Player) => {
         return (<div className='dinamic-base-click-upgrade-description'>
-            <p>Количество яиц за клик: {formatNumber(player.baseClickPower, 1)}
-                {' => '} {formatNumber(player.baseClickPower * 1.05, 1)}
+            <p>Количество яиц за клик: {formatNumber(player.baseClickPower, player.settings.suffix, 1)}
+                {' => '} {formatNumber(player.baseClickPower * 1.05, player.settings.suffix, 1)}
             </p>
         </div>)
     },
@@ -358,8 +358,8 @@ const clickUpgrade8: Upgrade = {
     },
     dinamicDescriptionPart: (player: Player) => {
         return (<div className='dinamic-base-click-upgrade-description'>
-            <p>Количество яиц за клик: {formatNumber(player.baseClickPower, 1)}
-                {' => '} {formatNumber(player.baseClickPower * 1.05, 1)}
+            <p>Количество яиц за клик: {formatNumber(player.baseClickPower, player.settings.suffix, 1)}
+                {' => '} {formatNumber(player.baseClickPower * 1.05, player.settings.suffix, 1)}
             </p>
         </div>)
     },
@@ -377,8 +377,8 @@ const clickUpgrade9: Upgrade = {
     },
     dinamicDescriptionPart: (player: Player) => {
         return (<div className='dinamic-base-click-upgrade-description'>
-            <p>Количество яиц за клик: {formatNumber(player.baseClickPower, 1)}
-                {' => '} {formatNumber(player.baseClickPower * 1.05, 1)}
+            <p>Количество яиц за клик: {formatNumber(player.baseClickPower, player.settings.suffix, 1)}
+                {' => '} {formatNumber(player.baseClickPower * 1.05, player.settings.suffix, 1)}
             </p>
         </div>)
     },
@@ -396,8 +396,8 @@ const clickUpgrade10: Upgrade = {
     },
     dinamicDescriptionPart: (player: Player) => {
         return (<div className='dinamic-base-click-upgrade-description'>
-            <p>Количество яиц за клик: {formatNumber(player.baseClickPower, 1)}
-                {' => '} {formatNumber(player.baseClickPower * 1.05, 1)}
+            <p>Количество яиц за клик: {formatNumber(player.baseClickPower, player.settings.suffix, 1)}
+                {' => '} {formatNumber(player.baseClickPower * 1.05, player.settings.suffix, 1)}
             </p>
         </div>)
     },
@@ -439,14 +439,14 @@ const generateBaseBuildingUpgrades = (initialPrice: number, name: string, buildi
                 return (
                     <div className='dinamic-base-building-upgrade-description'>
                         <p>Производство одного здания:
-                            {' ' + formatNumber(currentOneBuildingProductivity)}
-                            {' => '}{formatNumber(currentOneBuildingProductivity * 2)}
+                            {' ' + formatNumber(currentOneBuildingProductivity, player.settings.suffix)}
+                            {' => '}{formatNumber(currentOneBuildingProductivity * 2, player.settings.suffix)}
                         </p>
                         <p>Производство всех зданий:
-                            {' ' + formatNumber(currentTotalBuildingProductivity)}
-                            {' => '}{formatNumber(currentTotalBuildingProductivity * 2)}
+                            {' ' + formatNumber(currentTotalBuildingProductivity, player.settings.suffix)}
+                            {' => '}{formatNumber(currentTotalBuildingProductivity * 2, player.settings.suffix)}
                         </p>
-                        <p>Стоимость одного яйца в секунду: {formatNumber(efficiency, 1)}</p>
+                        <p>Стоимость одного яйца в секунду: {formatNumber(efficiency, player.settings.suffix, 1)}</p>
                     </div>)
             },
             description: "Увеличивает производительность " + building.name + " в 2 раза.",
@@ -514,6 +514,7 @@ export const defaultPlayer: Player = {
         building7, building8, building9,
         building10, building11, building12],
     settings: {
+        suffix: Suffix.SHORT,
         surroundingVolume: 50,
         surroundingVolumeMuted: false
     },

@@ -27,7 +27,7 @@ const BuildingTooltipContent = (props: Props) => {
       <div className='building-tooltip-content'>
          <p className='building-tooltip-header'>{building.unlocksAt == undefined || building.unlocksAt <= player.stats.maxScore ? building.name : "???"}</p>
          <div className='building-tooltip-info'>
-            <p className={player.score < building.price ? 'cant-buy' : ''}>{formatNumber(building.price)}</p>
+            <p className={player.score < building.price ? 'cant-buy' : ''}>{formatNumber(building.price, player.settings.suffix)}</p>
             <p>Крутое описание строения</p>
             {building.dynamicDescriptionPart && building.dynamicDescriptionPart(player)}
          </div>
