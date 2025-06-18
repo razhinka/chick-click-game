@@ -46,10 +46,10 @@ export const formatNumber = (num: number, precision?: number) => {
     if(num === undefined){
         return "";
     }
-    const numLength = num.toFixed(0).length - 1;
-    if(numLength < 6){
+    if(num.toFixed(0).length - 1 < 6){
         return num.toFixed(precision === undefined ? 0 : precision);
     }
+    const numLength = num.toFixed(0).length;
     const format = numberFormars.find(format => format.digits === Math.floor(numLength / 3) * 3);
     if(format !== undefined){
         return (num / Math.pow(10, format.digits)).toFixed(3) + " " + format.suffix;

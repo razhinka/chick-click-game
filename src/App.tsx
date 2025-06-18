@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import './App.css';
 import MainPage from './components/main/MainPage/MainPage.tsx';
 import { defaultPlayer } from './context/player-context-entities.tsx';
-import { Player } from './context/player-context.tsx';
+import { Player, Stats } from './context/player-context.tsx';
 import WelcomePage from './components/global/WelcomePage/WelcomePage.tsx';
 
 function App() {
@@ -40,7 +40,7 @@ function App() {
                 if (data !== null && data !== undefined && Object.keys(data).length > 0) {
                   console.log("Loading data about player from yandex cloud", { data });
                   let cloudPlayer = convertDataToPlayer(data["player"]);
-                  if (cloudPlayer.endedAt > playerRef.current.endedAt) {
+                  if (cloudPlayer.stats.endedAt > playerRef.current.stats.endedAt) {
                     console.log("Found newer data in cloud, updating stats");
                     storedPlayer = cloudPlayer;
                     setPlayer(cloudPlayer);
@@ -63,9 +63,9 @@ function App() {
       setPlayer(defaultPlayer);
     } else{
       let playerCopy = {...storedPlayer};
-      let eggsEarned = ((Date.now() - playerCopy.endedAt.getTime()) / 1000) * playerCopy.baseScorePerSecond;
+      let eggsEarned = ((Date.now() - playerCopy.stats.endedAt.getTime()) / 1000) * playerCopy.baseScorePerSecond;
       playerCopy.score = playerCopy.score + eggsEarned;
-      playerCopy.totalScore = playerCopy.totalScore + eggsEarned;
+      playerCopy.stats.totalScore = playerCopy.stats.totalScore + eggsEarned;
       console.log("Player returned to the game, during AFK he earned {}", eggsEarned);
       setPlayer(playerCopy);
       
@@ -73,7 +73,7 @@ function App() {
     window.addEventListener('beforeunload', () => {
       console.log("Saving player data before leaving");
       if(playerRef.current){
-        playerRef.current.endedAt = new Date();
+        playerRef.current.stats.endedAt = new Date();
         localStorage.setItem("player", JSON.stringify(playerRef.current));
         if (ysdkplayer) {
           ysdkplayer.setData({
@@ -124,17 +124,24 @@ function convertDataToPlayer(data: Object): Player {
   return {
     name: data["name"] || defaultPlayer.name,
     score: data["score"] || defaultPlayer.score,
-    totalScore: data["totalScore"] || defaultPlayer.totalScore,
-    maxScore: data["maxScore"] || defaultPlayer.maxScore,
     baseClickPower: data["baseClickPower"] || defaultPlayer.baseClickPower,
     baseScorePerSecond: data["baseScorePerSecond"] || defaultPlayer.baseScorePerSecond,
+    stats: convertDataToStats(data["stats"]) || defaultPlayer.baseClickPower,
     buildings: data["buildings"] || defaultPlayer.buildings,
     upgrades: data["upgrades"] || defaultPlayer.upgrades,
     gameTick: data["gameTick"] || defaultPlayer.gameTick,
-    startedAt: new Date(data["startedAt"]) || defaultPlayer.startedAt,
-    endedAt: new Date(data["endedAt"]) || defaultPlayer.endedAt,
-    bonusEggsGathered: data["bonusEggsGathered"] || defaultPlayer.bonusEggsGathered,
     settings: data["settings"] || defaultPlayer.settings
+  }
+}
+
+function convertDataToStats(stats: Object) : Stats {
+  return {
+    totalScore: stats["totalScore"] || defaultPlayer.stats.totalScore,
+    maxScore: stats["maxScore"] || defaultPlayer.stats.totalScore,
+    timesClicked: stats["timesClicked"] || defaultPlayer.stats.timesClicked,
+    startedAt: new Date(stats["startedAt"]) || defaultPlayer.stats.startedAt,
+    endedAt: new Date(stats["endedAt"]) || defaultPlayer.stats.endedAt,
+    bonusEggsGathered: stats["bonusEggsGathered"] || defaultPlayer.stats.bonusEggsGathered,
   }
 }
 

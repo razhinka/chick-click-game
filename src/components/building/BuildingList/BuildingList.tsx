@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import Building from '../BuildingItem/Building.tsx';
 import './BuildingList.css'
 import { Player } from '../../../context/player-context.tsx';
@@ -12,15 +12,16 @@ interface Props {
 const BuildingList = (props: Props) => {
    const {player, recalculatePlayerStats} = props;
 
+   const visibleBuildings = useMemo(() => 
+    player.buildings.filter(b => 
+      b.visibleAt === undefined || b.visibleAt < player.stats.maxScore
+    ), [player.buildings, player.stats.maxScore]);
+
    return (
       <div className="building-list-container">
          <UpgradeList player={player} recalculatePlayerStats={recalculatePlayerStats}/>
          {
-            player.buildings
-            .filter((building) =>{
-               return building.visibleAt == undefined || building.visibleAt < player.maxScore;
-            })
-            .map((element, i) => (
+            visibleBuildings.map((element, i) => (
                <Building key={i} 
                player={player}
                buildingIndex={i}
@@ -30,9 +31,5 @@ const BuildingList = (props: Props) => {
       </div>
    );
 }
-
-BuildingList.propTypes = {};
-
-BuildingList.defaultProps = {};
 
 export default BuildingList;

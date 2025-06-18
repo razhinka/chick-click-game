@@ -3,12 +3,8 @@ export interface Player {
     score: number,
     baseClickPower: number,
     baseScorePerSecond: number,
-    maxScore: number,
-    totalScore: number,
-    startedAt: Date,
-    endedAt: Date,
+    stats: Stats,
     gameTick: number,
-    bonusEggsGathered: number,
     buildings: Array<Building>,
     upgrades: Array<Upgrade>,
     settings: Settings,
@@ -19,12 +15,22 @@ export interface Settings {
     surroundingVolumeMuted: boolean,
 }
 
+export interface Stats {
+    timesClicked: number,
+    maxScore: number,
+    totalScore: number,
+    startedAt: Date,
+    endedAt: Date,
+    bonusEggsGathered: number,
+}
+
 export interface Building {
     index: number,
     name: string,
     amount: number,
     bonusPerSecond: number,
     currentMultiplier: number,
+    dynamicDescriptionPart?: (player: Player) => React.JSX.Element,
     visibleAt?: number,
     unlocksAt?: number,
     basePrice: number,
@@ -35,6 +41,7 @@ export interface Building {
 export interface Upgrade {
     name: string,
     price: number,
+    type: string,
     description?: string,
     dinamicDescriptionPart?: (player: Player) => React.JSX.Element,
     unlockCondition?: (player: Player) => boolean,
@@ -59,4 +66,17 @@ export interface OnUpdateUpgrade {
     price: number,
     unlockCondition?: (player: Player) => boolean,
     onUpdate: (player: Player, setPlayer: (player: Player) => void) => void
+}
+
+export const click = (player: Player, setPlayer: (player : Player) => void) : void => {
+    let newScore = player.score + player.baseClickPower;
+    setPlayer({...player, 
+        score: newScore,
+        stats: {
+            ...player.stats,
+            totalScore: player.stats.totalScore + player.baseClickPower,
+            maxScore: Math.max(player.stats.maxScore, newScore),
+            timesClicked: player.stats.timesClicked + 1,
+        }
+    });
 }

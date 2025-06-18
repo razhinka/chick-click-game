@@ -25,10 +25,37 @@ import { Building, Player, Upgrade } from './player-context.tsx'
 import React from 'react'
 import { formatNumber } from '../util/number-formatter.tsx'
 
+
+const getBuildingDynamicDescription = (buildingIndex: number) => {
+    return (player: Player) => {
+        let currentBuildingState = player.buildings.find((playerBuilding) => playerBuilding.index === buildingIndex);
+        if (currentBuildingState === undefined) {
+            return (<></>)
+        }
+        let currentOneBuildingProductivity = currentBuildingState.bonusPerSecond * currentBuildingState.currentMultiplier;
+        let currentTotalBuildingProductivity = currentOneBuildingProductivity * currentBuildingState.amount;
+        let efficiency = currentBuildingState.price / (currentOneBuildingProductivity);
+        return (
+            <div className='dinamic-base-building-upgrade-description'>
+                <p>Производство всех зданий:
+                    {' ' + formatNumber(currentTotalBuildingProductivity)}
+                    {' => '}{formatNumber(currentTotalBuildingProductivity + currentOneBuildingProductivity)}
+                </p>
+                <p>Доля от общего производства: {formatNumber(
+                    currentTotalBuildingProductivity * 100 /
+                    player.baseScorePerSecond, 2)}%{' => '}{formatNumber(
+                        (currentTotalBuildingProductivity + currentOneBuildingProductivity) * 100 /
+                        player.baseScorePerSecond, 2)}%</p> 
+                <p>Стоимость одного яйца в секунду: {formatNumber(efficiency, 1)}</p>
+            </div>)
+    }
+}
+
 const building1: Building = {
     index: 1,
     name: "Курочка",
     amount: 0,
+    dynamicDescriptionPart: getBuildingDynamicDescription(1),
     currentMultiplier: 1,
     bonusPerSecond: 1,
     basePrice: 25,
@@ -40,6 +67,7 @@ const building2: Building = {
     index: 2,
     name: "Автоклюв",
     amount: 0,
+    dynamicDescriptionPart: getBuildingDynamicDescription(2),
     currentMultiplier: 1,
     bonusPerSecond: 5,
     basePrice: 260,
@@ -51,6 +79,7 @@ const building3: Building = {
     index: 3,
     name: "Золотая несушка",
     amount: 0,
+    dynamicDescriptionPart: getBuildingDynamicDescription(3),
     currentMultiplier: 1,
     bonusPerSecond: 39,
     unlocksAt: 3500,
@@ -63,6 +92,7 @@ const building4: Building = {
     index: 4,
     name: "Улучшенные перья",
     amount: 0,
+    dynamicDescriptionPart: getBuildingDynamicDescription(4),
     currentMultiplier: 1,
     bonusPerSecond: 397,
     visibleAt: 3500,
@@ -76,6 +106,7 @@ const building5: Building = {
     index: 5,
     name: "Куриный домик",
     amount: 0,
+    dynamicDescriptionPart: getBuildingDynamicDescription(5),
     currentMultiplier: 1,
     bonusPerSecond: 5316,
     visibleAt: 70000,
@@ -89,6 +120,7 @@ const building6: Building = {
     index: 6,
     name: "Корм DELUXE",
     amount: 0,
+    dynamicDescriptionPart: getBuildingDynamicDescription(6),
     currentMultiplier: 1,
     bonusPerSecond: 90732,
     visibleAt: 1800000,
@@ -102,6 +134,7 @@ const building7: Building = {
     index: 7,
     name: "Курица-аристократ",
     amount: 0,
+    dynamicDescriptionPart: getBuildingDynamicDescription(7),
     currentMultiplier: 1,
     bonusPerSecond: 1923303,
     visibleAt: 50000000,
@@ -115,6 +148,7 @@ const building8: Building = {
     index: 8,
     name: "Турбо-Курятник",
     amount: 0,
+    dynamicDescriptionPart: getBuildingDynamicDescription(8),
     currentMultiplier: 1,
     bonusPerSecond: 49624369,
     visibleAt: 2200000000,
@@ -128,6 +162,7 @@ const building9: Building = {
     index: 9,
     name: "Чудо-Гнездо",
     amount: 0,
+    dynamicDescriptionPart: getBuildingDynamicDescription(9),
     currentMultiplier: 1,
     bonusPerSecond: 1532458415,
     visibleAt: 100000000000,
@@ -141,6 +176,7 @@ const building10: Building = {
     index: 10,
     name: "Инкубатор 2000х",
     amount: 0,
+    dynamicDescriptionPart: getBuildingDynamicDescription(10),
     currentMultiplier: 1,
     bonusPerSecond: 55840101669,
     visibleAt: 5500000000000,
@@ -154,6 +190,7 @@ const building11: Building = {
     index: 11,
     name: "Куриный вулкан",
     amount: 0,
+    dynamicDescriptionPart: getBuildingDynamicDescription(11),
     currentMultiplier: 1,
     bonusPerSecond: 2371789305994,
     visibleAt: 340000000000000,
@@ -168,6 +205,7 @@ const building12: Building = {
     currentMultiplier: 1,
     name: "Лазерный защитник",
     amount: 0,
+    dynamicDescriptionPart: getBuildingDynamicDescription(12),
     bonusPerSecond: 116198507454535,
     visibleAt: 20000000000000000,
     unlocksAt: 1900000000000000000,
@@ -176,8 +214,10 @@ const building12: Building = {
     iconPath: buildingIcon12
 }
 
+
 const clickUpgrade1: Upgrade = {
     name: 'Сила клика 1',
+    type: "click",
     price: 5000,
     description: "Увеличивает количество яиц за клик на 1%",
     unlockCondition: (player: Player) => {
@@ -196,10 +236,11 @@ const clickUpgrade1: Upgrade = {
 
 const clickUpgrade2: Upgrade = {
     name: 'Сила клика 2',
+    type: "click",
     price: 50000,
     description: "Увеличивает количество яиц за клик на 2%",
     unlockCondition: (player: Player) => {
-        return player.totalScore > 10000;
+        return player.stats.totalScore > 10000;
     },
     dinamicDescriptionPart: (player: Player) => {
         return (<div className='dinamic-base-click-upgrade-description'>
@@ -214,10 +255,11 @@ const clickUpgrade2: Upgrade = {
 
 const clickUpgrade3: Upgrade = {
     name: 'Сила клика 3',
+    type: "click",
     price: 500000,
     description: "Увеличивает количество яиц за клик на 2%",
     unlockCondition: (player: Player) => {
-        return player.totalScore > 100000;
+        return player.stats.totalScore > 100000;
     },
     dinamicDescriptionPart: (player: Player) => {
         return (<div className='dinamic-base-click-upgrade-description'>
@@ -232,10 +274,11 @@ const clickUpgrade3: Upgrade = {
 
 const clickUpgrade4: Upgrade = {
     name: 'Сила клика 4',
+    type: "click",
     price: 50000000,
     description: "Увеличивает количество яиц за клик на 3%",
     unlockCondition: (player: Player) => {
-        return player.totalScore > 10000000;
+        return player.stats.totalScore > 10000000;
     },
     dinamicDescriptionPart: (player: Player) => {
         return (<div className='dinamic-base-click-upgrade-description'>
@@ -250,10 +293,11 @@ const clickUpgrade4: Upgrade = {
 
 const clickUpgrade5: Upgrade = {
     name: 'Сила клика 5',
+    type: "click",
     price: 5000000000,
     description: "Увеличивает количество яиц за клик на 3%",
     unlockCondition: (player: Player) => {
-        return player.totalScore > 1000000000;
+        return player.stats.totalScore > 1000000000;
     },
     dinamicDescriptionPart: (player: Player) => {
         return (<div className='dinamic-base-click-upgrade-description'>
@@ -268,10 +312,11 @@ const clickUpgrade5: Upgrade = {
 
 const clickUpgrade6: Upgrade = {
     name: 'Сила клика 6',
+    type: "click",
     price: 500000000000,
     description: "Увеличивает количество яиц за клик на 3%",
     unlockCondition: (player: Player) => {
-        return player.totalScore > 100000000000;
+        return player.stats.totalScore > 100000000000;
     },
     dinamicDescriptionPart: (player: Player) => {
         return (<div className='dinamic-base-click-upgrade-description'>
@@ -286,10 +331,11 @@ const clickUpgrade6: Upgrade = {
 
 const clickUpgrade7: Upgrade = {
     name: 'Сила клика 7',
+    type: "click",
     price: 50000000000000,
     description: "Увеличивает количество яиц за клик на 5%",
     unlockCondition: (player: Player) => {
-        return player.totalScore > 10000000000000;
+        return player.stats.totalScore > 10000000000000;
     },
     dinamicDescriptionPart: (player: Player) => {
         return (<div className='dinamic-base-click-upgrade-description'>
@@ -304,10 +350,11 @@ const clickUpgrade7: Upgrade = {
 
 const clickUpgrade8: Upgrade = {
     name: 'Сила клика 8',
+    type: "click",
     price: 5000000000000000,
     description: "Увеличивает количество яиц за клик на 5%",
     unlockCondition: (player: Player) => {
-        return player.totalScore > 100000000000000000;
+        return player.stats.totalScore > 100000000000000000;
     },
     dinamicDescriptionPart: (player: Player) => {
         return (<div className='dinamic-base-click-upgrade-description'>
@@ -322,10 +369,11 @@ const clickUpgrade8: Upgrade = {
 
 const clickUpgrade9: Upgrade = {
     name: 'Сила клика 9',
+    type: "click",
     price: 500000000000000000,
     description: "Увеличивает количество яиц за клик на 5%",
     unlockCondition: (player: Player) => {
-        return player.totalScore > 100000000000000000;
+        return player.stats.totalScore > 100000000000000000;
     },
     dinamicDescriptionPart: (player: Player) => {
         return (<div className='dinamic-base-click-upgrade-description'>
@@ -340,10 +388,11 @@ const clickUpgrade9: Upgrade = {
 
 const clickUpgrade10: Upgrade = {
     name: 'Сила клика 10',
+    type: "click",
     price: 50000000000000000000,
     description: "Увеличивает количество яиц за клик на 5%",
     unlockCondition: (player: Player) => {
-        return player.totalScore > 10000000000000000000;
+        return player.stats.totalScore > 10000000000000000000;
     },
     dinamicDescriptionPart: (player: Player) => {
         return (<div className='dinamic-base-click-upgrade-description'>
@@ -358,10 +407,11 @@ const clickUpgrade10: Upgrade = {
 
 export const bonusEggUpgrade: Upgrade = {
     name: 'Золотые яйца',
+    type: "bonuseggfrequency",
     price: 6666666,
     description: "Золотые яйца появляются в 2 раза чаще",
     unlockCondition: (player: Player) => {
-        return player.bonusEggsGathered > 0;
+        return player.stats.bonusEggsGathered > 0;
     },
     iconPath: egg
 }
@@ -372,6 +422,7 @@ const generateBaseBuildingUpgrades = (initialPrice: number, name: string, buildi
         const upgrade: Upgrade = {
             name: name + ' ' + (index + 1),
             price: calculatePriceForIndex(initialPrice, index),
+            type: "building",
             iconPath: building.iconPath,
             unlockCondition: (player: Player) => {
                 return player.buildings.some((playerBuilding) => playerBuilding.index === building.index &&
@@ -448,16 +499,19 @@ export const defaultPlayer: Player = {
     score: 0,
     baseClickPower: 1,
     baseScorePerSecond: 0,
-    bonusEggsGathered: 0,
     gameTick: 0,
-    totalScore: 0,
-    maxScore: 0,
-    startedAt: new Date(),
-    endedAt: new Date(),
+    stats: {
+        bonusEggsGathered: 0,
+        totalScore: 0,
+        maxScore: 0,
+        startedAt: new Date(),
+        endedAt: new Date(),
+        timesClicked: 0
+    },
     buildings: [
-        building1, building2, building3, 
-        building4, building5, building6, 
-        building7, building8, building9, 
+        building1, building2, building3,
+        building4, building5, building6,
+        building7, building8, building9,
         building10, building11, building12],
     settings: {
         surroundingVolume: 50,

@@ -21,7 +21,7 @@ const WindowFocusHandler = (props: Props) => {
          let playerCopy = {...player};
          let eggsEarned = ((Date.now() - blurInfo.wasBluredAt) / 1000) * playerCopy.baseScorePerSecond;
          playerCopy.score = blurInfo.eggsOnBlur + eggsEarned;
-         playerCopy.totalScore = blurInfo.totalEggsOnBlur + eggsEarned;
+         playerCopy.stats.totalScore = blurInfo.totalEggsOnBlur + eggsEarned;
          console.log("Player returned to the game, during AFK he earned {}", eggsEarned);
          setPlayer(playerCopy);
       }
@@ -30,7 +30,7 @@ const WindowFocusHandler = (props: Props) => {
    const onBlur = () => {
       const blurState : BlurInfo = {
          eggsOnBlur: player.score,
-         totalEggsOnBlur: player.totalScore,
+         totalEggsOnBlur: player.stats.totalScore,
          wasBluredAt: Date.now()
       }
       setBlurInfo(blurState);

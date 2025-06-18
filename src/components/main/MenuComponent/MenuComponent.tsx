@@ -69,7 +69,7 @@ const MenuStatsComponent = (props: MenuStatsProps) => {
 
    const calculateTimeElapsed = (): string => {
       const currentTime = new Date();
-      const elapsedTime = currentTime.getTime() - player.startedAt.getTime();
+      const elapsedTime = currentTime.getTime() - player.stats.startedAt.getTime();
       const seconds = Math.floor((elapsedTime / 1000) % 60);
       const minutes = Math.floor((elapsedTime / (1000 * 60)) % 60);
       const hours = Math.floor((elapsedTime / (1000 * 60 * 60)) % 24);
@@ -86,10 +86,10 @@ const MenuStatsComponent = (props: MenuStatsProps) => {
          <div className='menu-component-stats-player'>
             <p>Имя игрока: {player.name}</p>
             <p>Количество яичек: {formatNumber(player.score)}</p>
-            <p>Количество яичек за все время: {formatNumber(player.totalScore)}</p>
+            <p>Количество яичек за все время: {formatNumber(player.stats.totalScore)}</p>
             <p>Количество яичек за клик: {formatNumber(player.baseClickPower, 1)}</p>
             <p>Количество яичек в секунду: {formatNumber(player.baseScorePerSecond)}</p>
-            <p>Максимальное количество яиц за все время: {formatNumber(player.maxScore)}</p>
+            <p>Максимальное количество яиц за все время: {formatNumber(player.stats.maxScore)}</p>
             <p>Количество зданий: {player.buildings.reduce((a, v) => a + v.amount, 0)}</p>
             <p>Количество улучшений: {player.upgrades.length}</p>
             <p>Время в игре: {(calculateTimeElapsed())}</p>
@@ -106,27 +106,27 @@ const MenuDeveloperComponent = (props: MenuStatsProps) => {
    const giveEggs = () => {
       let playerCopy = { ...player };
       playerCopy.score += 10000;
-      playerCopy.totalScore += 10000;
+      playerCopy.stats.totalScore += 10000;
       setPlayer(playerCopy);
    }
 
    const unlockAllBuildings = () => {
       let playerCopy = { ...player };
-      playerCopy.maxScore = 10 * Math.pow(10, 99);
+      playerCopy.stats.maxScore = 10 * Math.pow(10, 99);
       setPlayer(playerCopy);
    }
 
    const give10minutesEggs = () => {
       let playerCopy = { ...player };
       playerCopy.score += player.baseScorePerSecond * 600;
-      playerCopy.totalScore += player.baseScorePerSecond * 600;
+      playerCopy.stats.totalScore += player.baseScorePerSecond * 600;
       setPlayer(playerCopy);
    }
 
    const give10hoursEggs = () => {
       let playerCopy = { ...player };
       playerCopy.score += player.baseScorePerSecond * 60 * 60 * 10;
-      playerCopy.totalScore += player.baseScorePerSecond * 60 * 60 * 10;
+      playerCopy.stats.totalScore += player.baseScorePerSecond * 60 * 60 * 10;
       setPlayer(playerCopy);
    }
 

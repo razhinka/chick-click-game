@@ -21,8 +21,8 @@ const MainPage = (props: Props) => {
       tickCounter.current++;
       playerCopy.gameTick = tickCounter.current;
       playerCopy.score += playerCopy.baseScorePerSecond / 10;
-      playerCopy.totalScore += playerCopy.baseScorePerSecond / 10;
-      playerCopy.maxScore = Math.max(playerCopy.score, playerCopy.maxScore);
+      playerCopy.stats.totalScore += playerCopy.baseScorePerSecond / 10;
+      playerCopy.stats.maxScore = Math.max(playerCopy.score, playerCopy.stats.maxScore);
       setPlayer(playerCopy);
    }
 

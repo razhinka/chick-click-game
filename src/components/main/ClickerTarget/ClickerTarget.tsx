@@ -5,7 +5,7 @@ import screamingChick from '../../../assets/img/screaming-chick.png'
 import eggCurrency from '../../../assets/img/egg.png';
 import eggSound from '../../../assets/sounds/eggclick.mp3'
 import './ClickerTarget.css'
-import { Player } from '../../../context/player-context.tsx';
+import { click, Player } from '../../../context/player-context.tsx';
 import { formatNumber } from '../../../util/number-formatter.tsx';
 
 interface Props {
@@ -40,7 +40,10 @@ const ClickerTarget = (props: Props) => {
   const [eggsPerClick, setEggsPerClick] = useState<Eggs[]>([]);
 
   const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
-    console.log("Chick was Clicked!");
+    click(player, setPlayer);
+
+    //animations:
+
     handleFeathers(event, feathers, setFeathers, feathersAnimationFrameId);
     let chickImg = document.getElementById("chick");
     if(chickImg != null){
@@ -49,12 +52,7 @@ const ClickerTarget = (props: Props) => {
         (chickImg as HTMLImageElement).src = chick;
       }, 100)
     }
-    let playerCopy = {...player}
-    playerCopy.score += playerCopy.baseClickPower;
-    playerCopy.totalScore += playerCopy.baseClickPower;
-    playerCopy.maxScore = Math.max(playerCopy.score, playerCopy.maxScore);
-    handleEggs(event, eggsPerClick, setEggsPerClick, playerCopy.baseClickPower, eggsAnimationFrameId);
-    setPlayer(playerCopy);
+    handleEggs(event, eggsPerClick, setEggsPerClick, player.baseClickPower, eggsAnimationFrameId);
     let audio = new Audio(eggSound);
     audio.volume = player.settings.surroundingVolumeMuted ? 0 : player.settings.surroundingVolume / 100;
     audio.play();
